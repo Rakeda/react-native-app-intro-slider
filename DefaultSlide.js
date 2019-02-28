@@ -6,9 +6,13 @@ import {
   Image,
   Dimensions,
   Platform,
+  TouchableOpacity
 } from 'react-native';
 
+let buttons
+
 export default class DefaultSlide extends React.PureComponent {
+
   render() {
     const style = {
       backgroundColor: this.props.backgroundColor,
@@ -17,11 +21,18 @@ export default class DefaultSlide extends React.PureComponent {
       width: this.props.width,
       height: this.props.height,
     }
+    if(this.props.buttonText == ''){
+      buttons = null
+    }else{
+      buttons = (
+        <TouchableOpacity style={styles.button} onPress={this.props.buttonMethod}><Text style={styles.buttonText}>{this.props.buttonText}</Text></TouchableOpacity>
+      )
+    }
     return (
       <View style={[styles.mainContent, style]}>
-        <Text style={[styles.title, this.props.titleStyle]}>{this.props.title}</Text>
         <Image source={this.props.image} style={this.props.imageStyle} />
         <Text style={[styles.text, this.props.textStyle]}>{this.props.text}</Text>
+        {buttons}
       </View>
     );
   }
@@ -33,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: 'rgba(255, 255, 255, .7)',
+    color: '#999',
     fontSize: 16,
     textAlign: 'center',
     fontWeight: '300',
@@ -41,8 +52,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    color: 'rgba(255, 255, 255, .7)',
+    color: '#888',
     fontWeight: '300',
     paddingHorizontal: 16,
+  },
+  buttonText: {
+    padding: 10,
+    color: '#fff',
+  },
+  button: {
+    backgroundColor: '#1b87ff',
+    borderRadius: 4,
+    margin: 10
   }
 });
+
